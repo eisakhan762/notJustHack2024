@@ -6,6 +6,7 @@ import { Button } from "~/components/Button";
 import { useStore } from "~/store";
 import { generateInvoicePdf } from "~/utils/pdf";
 import { Invoice } from '~/schema/invoice';
+import { Link } from "expo-router";
 
 export default function InvoiceSummary() {
   const invoice = useStore(data => data.newInvoice);
@@ -14,7 +15,7 @@ export default function InvoiceSummary() {
 
 
   const handleGeneratePdf = () => {
-    generateInvoicePdf(invoice as Invoice, subTotal, total);
+    // generateInvoicePdf(invoice as Invoice, subTotal, total);
   }
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 p-4">
@@ -132,7 +133,9 @@ export default function InvoiceSummary() {
                 </View>
               </View>
             </View>
-            <Button title="Generate Invoice" className="mt-auto" onPress={handleGeneratePdf} />
+            <Link href="/invoices/generate/success" asChild>
+              <Button title="Generate Invoice" className="mt-auto" />
+            </Link>
           </View>
         </ScrollView>
 

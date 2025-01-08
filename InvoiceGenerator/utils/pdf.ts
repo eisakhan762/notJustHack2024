@@ -16,6 +16,7 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
   <style>
+  @page { size: A4; margin: 4mm 5mm 5mm 4mm;}
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -232,14 +233,16 @@ export const generateInvoicePdf = async (invoice: Invoice, subtotal: number, tot
     const { uri } = await Print.printToFileAsync({ html: generateHtml(invoice, subtotal, total) });
 
     // Define the target path
-    const targetPath = FileSystem.documentDirectory + `invoice.pdf`;
+    const targetPath = FileSystem.documentDirectory + `invoice-${invoice.invoiceNumber}.pdf`;
 
     // Move the file to the target path
     await FileSystem.moveAsync({
       from: uri,
       to: targetPath,
     });
-    await shareAsync(targetPath, { UTI: '.pdf', mimeType: 'application/pdf' });
+    console.log(targetPath);
+
+    return targetPath;
   } catch (error) {
     console.error('Error:', error);
   }
