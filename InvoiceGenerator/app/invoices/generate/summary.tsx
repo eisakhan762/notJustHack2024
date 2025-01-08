@@ -4,11 +4,17 @@ import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-na
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "~/components/Button";
 import { useStore } from "~/store";
+import { generateInvoicePdf } from "~/utils/pdf";
 
 export default function InvoiceSummary() {
   const invoice = useStore(data => data.newInvoice);
   const subTotal = useStore((data) => data.getSubtotal())
   const total = useStore((data) => data.getTotal())
+
+
+  const handleGeneratePdf = () => {
+    generateInvoicePdf();
+  }
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 p-4">
       {/* <Text>Invoice Summary</Text> */}
@@ -125,9 +131,7 @@ export default function InvoiceSummary() {
                 </View>
               </View>
             </View>
-            <Button title="Generate Invoice" className="mt-auto" onPress={() => {
-              // Handle invoice generation
-            }} />
+            <Button title="Generate Invoice" className="mt-auto" onPress={handleGeneratePdf} />
           </View>
         </ScrollView>
 
