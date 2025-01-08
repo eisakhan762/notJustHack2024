@@ -13,7 +13,7 @@ export default function InvoiceSummary() {
 
 
   const handleGeneratePdf = () => {
-    generateInvoicePdf();
+    generateInvoicePdf(invoice);
   }
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 p-4">
