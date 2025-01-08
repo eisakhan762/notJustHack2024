@@ -89,8 +89,11 @@ export default function GenerateInvoice() {
                     <View className="items-center justify-center flex-1">
                       <Text className="text-lg text-center">Total</Text>
                       <Text className="mt-2 text-lg font-bold text-center">
-                        ₹{(form.watch(`items.${index}.price`) || 0) *
-                          (form.watch(`items.${index}.quantity`) || 0)}
+                        ₹{(
+                          (Number(form.watch(`items.${index}.price`)) || 0) *
+                          (Number(form.watch(`items.${index}.quantity`)) || 0)
+                        ).toFixed(2)}
+
                       </Text>
                     </View>
 

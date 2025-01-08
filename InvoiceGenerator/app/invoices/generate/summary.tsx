@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "~/components/Button";
 import { useStore } from "~/store";
 import { generateInvoicePdf } from "~/utils/pdf";
+import { Invoice } from '~/schema/invoice';
 
 export default function InvoiceSummary() {
   const invoice = useStore(data => data.newInvoice);
@@ -13,7 +14,7 @@ export default function InvoiceSummary() {
 
 
   const handleGeneratePdf = () => {
-    generateInvoicePdf(invoice);
+    generateInvoicePdf(invoice as Invoice, subTotal, total);
   }
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 p-4">

@@ -2,8 +2,10 @@
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system'; // To manage files
 import { shareAsync } from 'expo-sharing';
+import { Invoice } from '~/schema/invoice';
 
-const html = `
+const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
+  const html = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,14 +163,15 @@ const html = `
 
     <div class="details">
       <div class="client-info">
-        <p>James Smith</p>
-        <p>(00) 000-000</p>
-        <p>youremail@example.com</p>
-        <p>123 Street Name, City Name, Country 1234</p>
+        <p>${invoice.recipient.name}</p>
+        // <p>(00) 000-000</p>
+        // <p>youremail@example.com</p>
+        <p>Tax Id: ${invoice.recipient?.taxID}</p>
+        <p>${invoice.recipient.address}</p>
       </div>
       <div class="invoice-info">
-        <p>INVOICE NO #12345</p>
-        <p>Date: 12/08/2029</p>
+        <p>INVOICE NO #${invoice.invoiceNumber}</p>
+        <p>Date: ${invoice.date}</p>
       </div>
       <div class="clear"></div>
     </div>
@@ -183,37 +186,23 @@ const html = `
         </tr>
       </thead>
       <tbody>
+      ${invoice.items.map(
+        (item) => `
         <tr>
-          <td>01</td>
-          <td>Logo Design</td>
-          <td>$00.00</td>
-          <td>$00.00</td>
+          <td>${item.quantity}</td>
+          <td>${item.name}</td>
+          <td>₹${item.price}</td>
+          <td>₹${Number(item.price) * Number(item.quantity)}</td>
         </tr>
-        <tr>
-          <td>03</td>
-          <td>Brochure Design</td>
-          <td>$00.00</td>
-          <td>$00.00</td>
-        </tr>
-        <tr>
-          <td>03</td>
-          <td>Brochure Design</td>
-          <td>$00.00</td>
-          <td>$00.00</td>
-        </tr>
-        <tr>
-          <td>03</td>
-          <td>Brochure Design</td>
-          <td>$00.00</td>
-          <td>$00.00</td>
-        </tr>
+        `
+      )}
       </tbody>
     </table>
 
     <div class="totals">
-      <div>SUBTOTAL: $4650.00</div>
-      <div>TAX: 12%</div>
-      <div class="grand-total">TOTAL: $4,650.00</div>
+      <div>SUBTOTAL: ₹${subtotal}</div>
+      <!-- <div>TAX: 12%</div> -->
+      <div class="grand-total">TOTAL: ₹${total}</div>
     </div>
 
     <div class="additional-info">
@@ -234,11 +223,13 @@ const html = `
 </html>
 
 `;
+  return html;
+};
 
-export const generateInvoicePdf = async (invoice: any) => {
+export const generateInvoicePdf = async (invoice: Invoice, subtotal: number, total: number) => {
   try {
     // Generate PDF and save to a temporary location
-    const { uri } = await Print.printToFileAsync({ html });
+    const { uri } = await Print.printToFileAsync({ html: generateHtml(invoice, subtotal, total) });
 
     // Define the target path
     const targetPath = FileSystem.documentDirectory + `invoice.pdf`;
