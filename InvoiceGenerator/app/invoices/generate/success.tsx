@@ -78,10 +78,11 @@ export default function Success() {
             <Button title="Share Invoice" onPress={handleShare} />
             <Button
               title="Return to Home"
+
               onPress={() => {
                 router.replace("/");
               }}
-              variant="secondary"
+              variant="link"
             />
           </View>
         </>
