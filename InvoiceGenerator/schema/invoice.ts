@@ -14,7 +14,10 @@ export const invoiceInfoSchema = z.object({
     .string({ required_error: 'Invoice number is required' })
     .min(3, 'Min length required is 3'),
   date: z.string({ required_error: 'Date is required' }).min(1, 'Min length required is 1'),
-  dueDate: z.string({ required_error: 'Due Date is required' }).min(1, 'Min length required is 1'),
+  dueDate: z
+    .string({ required_error: 'Due Date is required' })
+    .min(1, 'Min length required is 1')
+    .optional(),
 });
 
 export type InvoiceInfo = z.infer<typeof invoiceInfoSchema>;

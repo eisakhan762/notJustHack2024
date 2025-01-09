@@ -66,7 +66,7 @@ export default function GenerateInvoice() {
                         label='Price'
                         keyboardType="decimal-pad"
                         onChangeText={(value) => {
-                          if (/^\d*\.?\d*$/.test(value)) { // Regex to allow numbers and one decimal
+                          if (/^\d*\.?\d*$/.test(value)) {
                             form.setValue(`items.${index}.price`, value);
                           }
                         }}

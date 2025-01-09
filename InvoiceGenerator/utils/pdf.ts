@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
+import * as FileSystem from 'expo-file-system';
 import * as Print from 'expo-print';
-import * as FileSystem from 'expo-file-system'; // To manage files
-import { shareAsync } from 'expo-sharing';
+
 import { Invoice } from '~/schema/invoice';
 
 const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
@@ -229,13 +229,10 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
 
 export const generateInvoicePdf = async (invoice: Invoice, subtotal: number, total: number) => {
   try {
-    // Generate PDF and save to a temporary location
     const { uri } = await Print.printToFileAsync({ html: generateHtml(invoice, subtotal, total) });
 
-    // Define the target path
     const targetPath = FileSystem.documentDirectory + `invoice-${invoice.invoiceNumber}.pdf`;
 
-    // Move the file to the target path
     await FileSystem.moveAsync({
       from: uri,
       to: targetPath,

@@ -4,7 +4,6 @@ import { router } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { z } from 'zod';
 
 import { Button } from "~/components/Button";
 import CustomTextInput from "~/components/CustomTextInput";
@@ -15,7 +14,7 @@ import { useStore } from '~/store';
 
 export default function GenerateInvoice() {
   const addRecipientInfo = useStore(data => data.addRecipientInfo);
-  const recipient = useStore((data) => data.newInvoice.recipient);
+  const recipient = useStore((data) => data.newInvoice?.recipient);
   const form = useForm<BusinessEntity>({
     resolver: zodResolver(businessEntitySchema),
     defaultValues: {

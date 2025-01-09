@@ -10,7 +10,6 @@ export default function GenerateInvoiceLayout() {
 
   useEffect(() => {
     if (!newInvoice) {
-      // Reset invoice data
       startNewInvoice();
     } else {
       // Save invoice to server

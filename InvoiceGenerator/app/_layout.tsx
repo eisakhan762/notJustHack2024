@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import '../global.css';
 
 import { Stack } from 'expo-router';

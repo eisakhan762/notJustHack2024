@@ -24,9 +24,9 @@ export default function Success() {
   useEffect(() => {
     const timer = setTimeout(() => {
       handleGeneratePdf();
-    }, 500); // Ensures the loader is shown for at least 2.5 seconds
+    }, 500);
 
-    return () => clearTimeout(timer); // Cleanup timeout when component unmounts
+    return () => clearTimeout(timer);
   }, []);
 
   const handleGeneratePdf = async () => {
@@ -37,7 +37,7 @@ export default function Success() {
     } else {
       console.error("Failed to generate PDF");
     }
-    setIsLoading(false); // Ends loading state
+    setIsLoading(false);
   };
 
   const handleShare = async () => {
@@ -57,7 +57,6 @@ export default function Success() {
           backgroundColor: '#eee',
           zIndex: -100,
         }}
-        // Find more Lottie files at https://lottiefiles.com/featured
         source={require('../../../assets/party.json')}
       />
       {isLoading ? (

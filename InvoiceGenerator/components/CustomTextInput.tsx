@@ -12,7 +12,7 @@ const CustomTextInput = ({ label, name, ...props }: CustomTextInputProps) => {
   const {
     field: { onChange, onBlur, value },
     fieldState: { error }
-  } = useController({ name, rules: { required: `${name} is required` } })
+  } = useController({ name })
 
   return (
     <View className='gap-2'>

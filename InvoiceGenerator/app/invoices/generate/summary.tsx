@@ -1,21 +1,19 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
+/* eslint-disable react/self-closing-comp */
+import { Link, Redirect } from "expo-router";
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { Button } from "~/components/Button";
 import { useStore } from "~/store";
-import { generateInvoicePdf } from "~/utils/pdf";
-import { Invoice } from '~/schema/invoice';
-import { Link } from "expo-router";
 
 export default function InvoiceSummary() {
   const invoice = useStore(data => data.newInvoice);
   const subTotal = useStore((data) => data.getSubtotal())
   const total = useStore((data) => data.getTotal())
 
-
-  const handleGeneratePdf = () => {
-    // generateInvoicePdf(invoice as Invoice, subTotal, total);
+  if (!invoice) {
+    return <Redirect href='/' />;
   }
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 p-4">
@@ -37,21 +35,21 @@ export default function InvoiceSummary() {
               </View>
             </View> */}
             <View className="mb-8">
-              <Text className="text-4xl font-bold">#: INV-{invoice.invoiceNumber}</Text>
+              <Text className="text-4xl font-bold">#: INV-{invoice?.invoiceNumber}</Text>
               <View className="flex-row justify-between mt-4">
                 <View>
                   <Text className="text-sm text-gray-500">Date</Text>
-                  <Text className="text-base">{invoice.date}</Text>
+                  <Text className="text-base">{invoice?.date}</Text>
                 </View>
                 <View>
                   <Text className="text-sm text-gray-500">Due Date</Text>
-                  <Text className="text-base">{invoice.dueDate}</Text>
+                  <Text className="text-base">
+                    {invoice.dueDate ? invoice.dueDate : 'Due Date Not Provided'}</Text>
                 </View>
               </View>
             </View>
 
-            {invoice.sender &&
-              // Sender Information
+            {invoice?.sender &&
               <View>
                 <Text className="mb-2 text-lg font-semibold color-slate-500">Sender</Text>
 
@@ -65,7 +63,7 @@ export default function InvoiceSummary() {
 
 
             {/* Recipient Information */}
-            {invoice.recipient &&
+            {invoice?.recipient &&
               <View>
                 <Text className="mb-2 text-lg font-semibold color-slate-500">Recipient</Text>
                 <View className="p-4 rounded-lg bg-gray-50">
@@ -92,7 +90,7 @@ export default function InvoiceSummary() {
                   </View>
 
                   {/* Sample Items */}
-                  {invoice.items?.map(item => (
+                  {invoice?.items?.map(item => (
                     <View key={item.name} className="flex-row justify-between">
                       <Text className="flex-1">{item.name}</Text>
                       <Text className="w-20 text-right">{item.quantity}</Text>
