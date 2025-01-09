@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Stack } from "expo-router";
 import { useEffect } from "react";
+
 import { useStore } from "~/store";
 
 export default function GenerateInvoiceLayout() {

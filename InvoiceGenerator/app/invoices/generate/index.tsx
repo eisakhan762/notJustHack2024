@@ -4,7 +4,6 @@ import { router } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { z } from 'zod';
 
 import { Button } from "~/components/Button";
 import CustomTextInput from "~/components/CustomTextInput";
