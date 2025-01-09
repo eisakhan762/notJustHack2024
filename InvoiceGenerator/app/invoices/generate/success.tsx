@@ -24,7 +24,7 @@ export default function Success() {
   useEffect(() => {
     const timer = setTimeout(() => {
       handleGeneratePdf();
-    }, 1000); // Ensures the loader is shown for at least 2.5 seconds
+    }, 500); // Ensures the loader is shown for at least 2.5 seconds
 
     return () => clearTimeout(timer); // Cleanup timeout when component unmounts
   }, []);

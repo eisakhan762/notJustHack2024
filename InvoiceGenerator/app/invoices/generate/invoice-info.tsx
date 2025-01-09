@@ -25,10 +25,11 @@ export default function GenerateInvoice() {
   const form = useForm<InvoiceInfo>({
     resolver: zodResolver(invoiceInfoSchema),
     defaultValues: {
-      invoiceNumber: '74817283471',
+      invoiceNumber: `${String(new Date().getDate()).padStart(2, '0')}${String(new Date().getHours()).padStart(2, '0')}${String(new Date().getMinutes()).padStart(2, '0')}${String(new Date().getSeconds()).padStart(2, '0')}`,
       date: formatToDDMMYYYY(new Date()),
       dueDate: formatToDDMMYYYY(new Date(new Date().setDate(new Date().getDate() + 14))),
     }
+
   });
 
   const onSubmit = (data: any) => {

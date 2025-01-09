@@ -16,12 +16,13 @@ import { useStore } from '~/store'
 
 export default function GenerateInvoice() {
   const addSenderInfo = useStore(data => data.addSenderInfo);
+  const sender = useStore((data) => data.newInvoice?.sender);
   const form = useForm<BusinessEntity>({
     resolver: zodResolver(businessEntitySchema),
     defaultValues: {
-      name: 'Dynamic Thinker',
-      address: '123 Main St, anytown, USA',
-      taxID: '1234567890',
+      name: sender?.name || "Sender Name",
+      address: sender?.address || "Sender Address",
+      taxID: sender?.taxID || "Tax ID (Optional)",
     }
   });
 
