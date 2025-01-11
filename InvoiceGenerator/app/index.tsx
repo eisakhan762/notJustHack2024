@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Stack, Link } from 'expo-router';
+import React from 'react';
 import { ImageBackground, Text, View } from 'react-native';
 
 import { Button } from '~/components/Button';
@@ -12,10 +13,6 @@ export default function Home() {
     <>
       <Stack.Screen options={{ title: 'Home', headerShown: false }} />
       <View className='justify-center flex-1 gap-8 p-4'>
-        <ImageBackground
-          // source={require('../assets/invoice-bg-png')}
-          className='absolute w-full h-full opacity-5'
-          resizeMode='cover' />
 
         <View className='items-center gap-2'>
           <Text className='text-4xl font-bold'>Seth Ji</Text>

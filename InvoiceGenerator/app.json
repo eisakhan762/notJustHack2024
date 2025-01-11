@@ -3,7 +3,7 @@
     "name": "InvoiceGenerator",
     "slug": "InvoiceGenerator",
     "version": "1.0.0",
-    "scheme": "InvoiceGenerator",
+    "scheme": ["invoicegenerator"],
     "web": {
       "bundler": "metro",
       "output": "static",
