@@ -5,6 +5,7 @@ import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { z } from 'zod';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 import { Button } from '~/components/Button';
 import CustomTextInput from '~/components/CustomTextInput';
@@ -31,7 +32,7 @@ export default function GenerateInvoice() {
       }]
     },
   });
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'items',
   });
@@ -54,8 +55,11 @@ export default function GenerateInvoice() {
           <FormProvider {...form}>
             <View className='gap-3'>
               {fields.map((_, index) => (
-                <View key={index} className='gap-3 p-4 rounded-lg shadow bg-gray-50'>
+                <View key={`items.${index}.id`} className='gap-3 p-4 rounded-lg shadow bg-gray-50'>
+                  <View className='flex-row justify-between'>
                   <Text className='text-lg font-semibold'>Item {index + 1}</Text>
+                  <EvilIcons className='p-2' name="trash" size={26} color="red" onPress={() => remove(index)} />
+                  </View>
                   <CustomTextInput
                     name={`items.${index}.name`} label='Name' />
                   <View className='flex-row gap-3'>

@@ -23,6 +23,7 @@ export const invoiceInfoSchema = z.object({
 export type InvoiceInfo = z.infer<typeof invoiceInfoSchema>;
 
 export const invoiceItemSchema = z.object({
+  id: z.string().optional().default(() => Math.random().toString(36).substr(2, 9)),
   name: z.string({ required_error: 'Name is required!' }).min(1, 'Name Mini length error'),
   quantity: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) > 0, {
     message: 'Quantity must be a positive number',

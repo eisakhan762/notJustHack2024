@@ -11,7 +11,6 @@ import { BusinessEntity, businessEntitySchema } from '~/schema/invoice';
 import { useStore } from '~/store';
 
 
-
 export default function GenerateInvoice() {
   const addRecipientInfo = useStore(data => data.addRecipientInfo);
   const recipient = useStore((data) => data.newInvoice?.recipient);

@@ -11,8 +11,8 @@
     "jsx": "react-native",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true, // Speeds up builds by skipping library type checks
-    "resolveJsonModule": true // Enables importing JSON files directly
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": [
     "**/*.ts",
