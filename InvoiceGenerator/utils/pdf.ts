@@ -4,6 +4,7 @@ import * as Print from 'expo-print';
 
 import { Invoice } from '~/schema/invoice';
 
+
 const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
   const html = `
 <!DOCTYPE html>
@@ -37,6 +38,7 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
       flex: 1;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
     .header {
       display: flex;
@@ -48,6 +50,13 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
     .header .logo {
       font-size: 24px;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+      .header .logo .img-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 25px;
     }
     .header .logo span {
       display: block;
@@ -138,7 +147,7 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
       width: 100px;
       height: 100px;
     }
-    .watermark {
+        .watermark {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -148,16 +157,33 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
       white-space: nowrap;
       pointer-events: none;
       user-select: none;
+      opacity: 1;
+    }
+
+    .watermark img {
+      max-width: 100%;
+      max-height: 100%;
+      opacity: 0.2;
+      /* Reduce the opacity of the image */
+      pointer-events: none;
+      user-select: none;
     }
   </style>
 </head>
 <body>
-  <div class="watermark">CONFIDENTIAL</div>
   <div class="invoice-container">
+  <div class="watermark">
+      <img src="https://i.ibb.co/cYTtT5B/hk-logo.png">
+    </div>
     <div class="header">
       <div class="logo">
-        Hk Enterprises
+        <div class="logoContainer">
+        <img src="https://i.ibb.co/cYTtT5B/hk-logo.png" class="img-logo"/>
+      </div>
+      <div class="company-info">
+        HK Enterprises
         <span>Tagline Here</span>
+      </div>
       </div>
       <div class="invoice-title">Invoice</div>
     </div>
