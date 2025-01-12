@@ -3,6 +3,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { shareAsync } from "expo-sharing";
 import LottieView from 'lottie-react-native';
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
 
