@@ -4464,11 +4464,14 @@ expo-sharing@~13.0.1:
   resolved "https://registry.npmjs.org/expo-sharing/-/expo-sharing-13.0.1.tgz"
   integrity sha512-qych3Nw65wlFcnzE/gRrsdtvmdV0uF4U4qVMZBJYPG90vYyWh2QM9rp1gVu0KWOBc7N8CC2dSVYn4/BXqJy6Xw==
 
+<<<<<<< HEAD
 expo-sqlite@^15.0.6:
   version "15.0.6"
   resolved "https://registry.npmjs.org/expo-sqlite/-/expo-sqlite-15.0.6.tgz"
   integrity sha512-3cW8n6Lxj9P3JhbHQhLhPXBl/UAYZgKbbs19XbtaVM81LKiaUR6W1VLIaxGcv0vRVWfmEdGCbv12gF888szOig==
 
+=======
+>>>>>>> d9fd8cf72c9bc0ca98c19b214eedd1a0f9a6939b
 expo-status-bar@~2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-2.0.1.tgz"
@@ -4487,7 +4490,11 @@ expo-web-browser@~14.0.2:
   resolved "https://registry.npmjs.org/expo-web-browser/-/expo-web-browser-14.0.2.tgz"
   integrity sha512-Hncv2yojhTpHbP6SGWARBFdl7P6wBHc1O8IKaNsH0a/IEakq887o1eRhLxZ5IwztPQyRDhpqHdgJ+BjWolOnwA==
 
+<<<<<<< HEAD
 expo@*, expo@^52.0.25, expo@>=50.0.0:
+=======
+expo@*, expo@^52.0.23, expo@>=50.0.0:
+>>>>>>> d9fd8cf72c9bc0ca98c19b214eedd1a0f9a6939b
   version "52.0.25"
   resolved "https://registry.npmjs.org/expo/-/expo-52.0.25.tgz"
   integrity sha512-BWHveMyDSST7vuGNn8zbrSGboJdvXDE9auUEkFa14ETAWRtsghYnZ0KmjOEQNxNmrBHzct/JgZ8efh5sJGd0xA==
