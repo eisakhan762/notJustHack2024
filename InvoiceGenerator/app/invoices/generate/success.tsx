@@ -3,14 +3,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { shareAsync } from "expo-sharing";
 import LottieView from 'lottie-react-native';
-import React from "react";
-import { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
+import React,{ useEffect, useRef, useState } from "react";
+import { ActivityIndicator, Text, View, StyleSheet, Modal, Share } from "react-native";
 
 import { Button } from "~/components/Button";
 import { Invoice } from "~/schema/invoice";
 import { useStore } from "~/store";
-import { generateInvoicePdf } from "~/utils/pdf";
+import { generateInvoicePdf, generateInvoiceText } from "~/utils/pdf";
 
 
 export default function Success() {
@@ -22,9 +21,12 @@ export default function Success() {
   const [isLoading, setIsLoading] = useState(true);
   const [pdfUri, setPdfUri] = useState<string | null>(null);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       handleGeneratePdf();
+      // generateInvoiceText(invoice as Invoice, subTotal, total)
     }, 500);
 
     return () => clearTimeout(timer);
@@ -41,12 +43,24 @@ export default function Success() {
     setIsLoading(false);
   };
 
-  const handleShare = async () => {
+  const shareAsPdf = async () => {
     if (!pdfUri) {
       return;
     }
     await shareAsync(pdfUri, { UTI: ".pdf", mimeType: "application/pdf" });
   };
+
+  const shareAsText = async () => {
+    if (!pdfUri) {
+      return;
+    }
+    const text = await generateInvoiceText(invoice as Invoice, subTotal, total);
+    console.log(text);
+    
+    await Share.share({
+      message: text,
+    })
+  }
 
   return (
     <View className="items-center justify-center flex-1 p-4">
@@ -68,7 +82,7 @@ export default function Success() {
         </View>
       ) : (
         <>
-          <View className="items-center gap-4 mb-8">
+          <View className="items-center justify-center flex-1 gap-4 mb-8">
             <MaterialCommunityIcons name="check-circle" size={80} color="#5bc05c" />
             <Text className="text-2xl font-bold text-center">Your Invoice is Ready!</Text>
             <Text className="text-center text-gray-600">
@@ -76,7 +90,32 @@ export default function Success() {
             </Text>
           </View>
           <View className="w-full gap-4">
-            <Button title="Share Invoice" onPress={handleShare} />
+            <Button title="Share Invoice" onPress={() => setModalVisible(true)} />
+            <Modal
+              animationType="slide"
+              transparent
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View className="items-center justify-center flex-1">
+                <View className="p-6 bg-white rounded-lg shadow-lg w-80">
+                  <View className="flex justify-between">
+                  <Button
+                    title="Send as text"
+                    variant="link"
+                    onPress={shareAsText}
+                    className="mt-4"
+                  />
+                  <Button
+                    title="Send as pdf"
+                    variant="link"
+                    onPress={shareAsPdf}
+                    className="mt-4"
+                  />
+                  </View>
+                </View>
+              </View>
+            </Modal>
             <Button
               title="Return to Home"
 

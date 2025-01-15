@@ -191,8 +191,6 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
     <div class="details">
       <div class="client-info">
         <p>${invoice.recipient.name}</p>
-        // <p>(00) 000-000</p>
-        // <p>youremail@example.com</p>
         <p>Tax Id: ${invoice.recipient?.taxID}</p>
         <p>${invoice.recipient.address}</p>
       </div>
@@ -228,7 +226,6 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
 
     <div class="totals">
       <div>SUBTOTAL: ₹${subtotal}</div>
-      <!-- <div>TAX: 12%</div> -->
       <div class="grand-total">TOTAL: ₹${total}</div>
     </div>
 
@@ -252,12 +249,67 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
 `;
   return html;
 };
+export const generateInvoiceText = async (invoice: Invoice, subtotal: number, total: number) => {
+  // Define the header part of the invoice
+  const header = `
+*Invoice Number:* ${invoice.invoiceNumber}
+*Date:* ${invoice.date}
+
+*Sender:*
+Company Name: Hk Media House
+Billing Address: ${invoice.sender.address}
+
+*Recipient:*
+Name: ${invoice.recipient.name}
+Address: ${invoice.recipient.address}
+
+---------------------------------------
+${`*Name*`.padEnd(10)} ${`*Qty*`.padStart(8)}   ${`*P/pcs*`.padEnd(8)} ${`*Total*`.padStart(8)}
+---------------------------------------
+`;
+
+  // Define the item details part with adjusted widths
+  const itemsText = invoice.items
+    .map(item => {
+      const itemTotalPrice = (Number(item.price) * Number(item.quantity)).toFixed(2);
+
+      // Break the item name into multiple lines if necessary
+      const itemNameLines = item.name.match(/.{1,10}/g) || [""]; // Split into chunks of 10 characters
+
+      // First line includes all columns
+      const firstLine = `${itemNameLines[0].padEnd(10)} ${item.quantity.toString().padStart(8)}   ${`₹${item.price}`.padEnd(8, ' ')} ${`₹${itemTotalPrice}`.padStart(8, ' ')}`;
+
+      // Additional lines for the remaining chunks of the item name
+      const additionalLines = itemNameLines.slice(1).map(line => `${line.padEnd(10)} ${"".padStart(8)}   ${"".padEnd(8)} ${"".padStart(8)}`).join("\n");
+
+      // Combine first line and additional lines
+      return `${firstLine}\n${additionalLines}`;
+    })
+    .join("\n");
+
+  // Define the footer part with adjusted widths
+  const footer = `
+---------------------------------------
+*Subtotal:* ₹${subtotal.toFixed(2)}
+---------------------------------------
+*Total:* ₹${total.toFixed(2)}
+---------------------------------------
+${invoice.dueDate ? `Thank you for your business! Please make payment by the due date: ${invoice.dueDate}` : 'Thank you for your business!'}
+`;
+
+  // Combine all parts and return the complete invoice text
+  return `${header}\n${itemsText}\n${footer}`;
+};
+
+
+
+
 
 export const generateInvoicePdf = async (invoice: Invoice, subtotal: number, total: number) => {
   try {
     const { uri } = await Print.printToFileAsync({ html: generateHtml(invoice, subtotal, total) });
 
-    const targetPath = FileSystem.documentDirectory + `invoice-${invoice.invoiceNumber}.pdf`;
+    const targetPath = FileSystem.documentDirectory + `invoice-${invoice.recipient.name}.pdf`;
 
     await FileSystem.moveAsync({
       from: uri,

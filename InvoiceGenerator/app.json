@@ -3,7 +3,9 @@
     "name": "InvoiceGenerator",
     "slug": "InvoiceGenerator",
     "version": "1.0.0",
-    "scheme": ["invoicegenerator"],
+    "scheme": [
+      "invoicegenerator"
+    ],
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -36,6 +38,14 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.eisakhan1947.InvoiceGenerator"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "85d4822c-0310-467d-8013-66213bea5214"
+      }
     }
   }
 }
