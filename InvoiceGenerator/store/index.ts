@@ -6,8 +6,10 @@ import { Invoice, BusinessEntity, InvoiceInfo, InvoiceItem } from '~/schema/invo
 
 export type InvoiceState = {
   profile: BusinessEntity;
-  setProfile: (profile: BusinessEntity) => void;
+  onboardingCompleted: boolean;
   newInvoice: Partial<Invoice> | null;
+  setProfile: (profile: BusinessEntity) => void;
+  setOnboardingCompleted: (profile: BusinessEntity) => void;
   startNewInvoice: () => void;
   resetNewInvoices: () => void;
   addRecipientInfo: (recipient: BusinessEntity) => void;
@@ -25,8 +27,10 @@ export const useStore = create<InvoiceState>()(
         address: "",
         taxID: "",
       },
+      onboardingCompleted: false,
       // PROFILE
       setProfile: (profile) => set(() => ({ profile })),
+      setOnboardingCompleted: () => set(() => ({onboardingCompleted: true})),
       newInvoice: null,
       startNewInvoice: () =>
         set(() => ({

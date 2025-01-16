@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { zodResolver } from '@hookform/resolvers/zod';
+import { router } from 'expo-router';
 import { FormProvider, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +15,7 @@ import { useStore } from '~/store'
 
 export default function ProfileScreen() {
   const setProfile = useStore(data => data.setProfile);
+  const setOnBoardingCompleted = useStore((data) => data.setOnboardingCompleted)
   const profile = useStore((data) => data.profile);
   const form = useForm<BusinessEntity>({
     resolver: zodResolver(businessEntitySchema),
@@ -26,7 +28,8 @@ export default function ProfileScreen() {
 
   const onSubmit = (data: any) => {
     setProfile(data);
-    // router.push('/invoices/generate/recipient');
+    setOnBoardingCompleted()
+    router.replace('/')
   };
 
   return (

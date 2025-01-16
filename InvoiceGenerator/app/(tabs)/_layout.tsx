@@ -7,7 +7,12 @@ export default function TabsLayout() {
     // tabBarShowLabel: false,
     tabBarActiveTintColor: '#166534',
   }}>
-    <Tabs.Screen name='index' options={{ title: 'Invoices', tabBarIcon: ({ color, size }) => <FontAwesome6 name="file-invoice-dollar" size={size} color={color} /> }} />
+    <Tabs.Screen name='index' options={{
+      title: 'Invoices',
+      tabBarIcon: ({ color, size }) =>
+        <FontAwesome6 name="file-invoice-dollar" size={size} color={color} />,
+      headerShown: false
+    }} />
     <Tabs.Screen name='profile' options={{ title: 'Profile', tabBarIcon: ({ color, size }) => <FontAwesome6 name="user-astronaut" size={size} color={color} /> }} />
   </Tabs>
 }
