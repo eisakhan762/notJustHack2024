@@ -19,6 +19,7 @@ const CustomTextInput = ({ label, name, ...props }: CustomTextInputProps) => {
       <Text className='text-lg'>{label}</Text>
       <TextInput onChangeText={onChange}
         value={value?.toString()}
+        placeholder={label}
         onBlur={onBlur} {...props} className={`rounded border border-gray-300 p-4 ${props?.className}`}
       />
       {error?.message &&

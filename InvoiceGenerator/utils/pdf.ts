@@ -181,8 +181,8 @@ const generateHtml = (invoice: Invoice, subtotal: number, total: number) => {
         <img src="https://i.ibb.co/cYTtT5B/hk-logo.png" class="img-logo"/>
       </div>
       <div class="company-info">
-        HK Enterprises
-        <span>Tagline Here</span>
+        ${invoice.sender.name}
+        <span>${invoice.sender.address}</span>
       </div>
       </div>
       <div class="invoice-title">Invoice</div>
@@ -256,7 +256,7 @@ export const generateInvoiceText = async (invoice: Invoice, subtotal: number, to
 *Date:* ${invoice.date}
 
 *Sender:*
-Company Name: Hk Media House
+Company Name: ${invoice.sender.name}
 Billing Address: ${invoice.sender.address}
 
 *Recipient:*

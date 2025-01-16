@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Stack, Link, router } from 'expo-router';
 import React from 'react';
-import { ImageBackground, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { Button } from '~/components/Button';
 import { useStore } from '~/store';
@@ -11,19 +11,18 @@ import { useStore } from '~/store';
 
 export default function Home() {
   const existingNewInvoice = useStore(data => data.newInvoice);
-  const startNewInvoice = useStore(data => data.startNewInvoice)
+  const startNewInvoice = useStore((data) => data.startNewInvoice)
 
   const onNewInvoice = () => {
-      startNewInvoice();
-    router.push("/invoices/generate")
-  };
+    startNewInvoice();
+    router.push('/invoices/generate')
+  }
+
   const onResumeInvoice = () => {
-      startNewInvoice();
-    router.push("/invoices/generate")
-  };
+    router.push('/invoices/generate')
+  }
   return (
     <>
-      <Stack.Screen options={{ title: 'Home', headerShown: false }} />
       <View className='justify-center flex-1 gap-8 p-4'>
 
         <View className='items-center gap-2'>
@@ -32,9 +31,10 @@ export default function Home() {
             Create and manage you business with Seth Ji.
           </Text>
         </View>
-        <Button title="New Invoice" onPress={onNewInvoice}/>
-        {existingNewInvoice && <Button onPress={onResumeInvoice} variant='link' title="Resume invoice" />}
-
+        <Button title="New Invoice" onPress={onNewInvoice} />
+        {existingNewInvoice &&
+          <Button variant='link' title="Resume Invoice" onPress={onResumeInvoice} />
+        }
       </View>
 
       {/* <Container>

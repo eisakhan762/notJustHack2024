@@ -19,15 +19,15 @@ export default function ProfileScreen() {
   const form = useForm<BusinessEntity>({
     resolver: zodResolver(businessEntitySchema),
     defaultValues: {
-      name: profile?.name || "Sender Name",
-      address: profile?.address || "Sender Address",
-      taxID: profile?.taxID || "Tax ID (Optional)",
+      name: profile?.name,
+      address: profile?.address,
+      taxID: profile?.taxID,
     }
   });
 
   const onSubmit = (data: any) => {
     setProfile(data);
-    // show UI feedback: success
+    // router.push('/invoices/generate/recipient');
   };
 
   return (
