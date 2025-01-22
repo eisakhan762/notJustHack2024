@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { shareAsync } from "expo-sharing";
 import LottieView from 'lottie-react-native';
-import React,{ useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Text, View, StyleSheet, Modal, Share } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { ActivityIndicator, Text, View, StyleSheet, Modal, Share, TouchableOpacity } from "react-native";
 
 import { Button } from "~/components/Button";
 import { Invoice } from "~/schema/invoice";
@@ -56,7 +56,7 @@ export default function Success() {
     }
     const text = await generateInvoiceText(invoice as Invoice, subTotal, total);
     console.log(text);
-    
+
     await Share.share({
       message: text,
     })
@@ -97,25 +97,45 @@ export default function Success() {
               visible={modalVisible}
               onRequestClose={() => setModalVisible(false)}
             >
-              <View className="items-center justify-center flex-1">
+              <View className="items-center justify-center flex-1 bg-black/50">
                 <View className="p-6 bg-white rounded-lg shadow-lg w-80">
-                  <View className="flex justify-between">
-                  <Button
-                    title="Send as text"
-                    variant="link"
-                    onPress={shareAsText}
-                    className="mt-4"
-                  />
-                  <Button
-                    title="Send as pdf"
-                    variant="link"
-                    onPress={shareAsPdf}
-                    className="mt-4"
-                  />
+                  {/* Cancel Icon */}
+                  <TouchableOpacity
+                    onPress={() => setModalVisible(false)}
+                    style={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      zIndex: 10,
+                    }}
+                  >
+                    <Ionicons name="close-circle" size={28} color="#FF6347" />
+                  </TouchableOpacity>
+
+                  <Text className="mb-4 text-lg font-bold text-center">Share Invoice</Text>
+
+                  {/* Icon Actions */}
+                  <View className="flex-row justify-around mt-4">
+                    <TouchableOpacity
+                      onPress={shareAsText}
+                      className="items-center"
+                    >
+                      <MaterialCommunityIcons name="text-box-outline" size={40} color="#6200ea" />
+                      <Text className="mt-2 text-sm text-gray-700">Send as Text</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={shareAsPdf}
+                      className="items-center"
+                    >
+                      <MaterialCommunityIcons name="file-pdf-box" size={40} color="#e63946" />
+                      <Text className="mt-2 text-sm text-gray-700">Send as PDF</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
             </Modal>
+
+
             <Button
               title="Return to Home"
 
